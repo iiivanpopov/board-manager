@@ -20,7 +20,7 @@ export const handleInspectionBtn = async () => {
 	) {
 		const date = new Date(elements.inspection.dateField.value)
 		try {
-			const { status } = await saveBoardInspection(
+			const { status, message } = await saveBoardInspection(
 				{
 					date,
 					week: getWeekNumber(date),
@@ -31,7 +31,7 @@ export const handleInspectionBtn = async () => {
 				},
 				+elements.workerInput.value
 			)
-			updateStatusLabel(status)
+			updateStatusLabel(status, message)
 		} catch (error) {
 			handleUIError(error, 'Error saving board inspection:')
 		}
@@ -47,7 +47,7 @@ export const handleInventoryBtn = async () => {
 	) {
 		const date = new Date(elements.inventory.dateField.value)
 		try {
-			const { status } = await saveBoardInventory(
+			const { status, message } = await saveBoardInventory(
 				{
 					date,
 					week: getWeekNumber(date),
@@ -56,30 +56,31 @@ export const handleInventoryBtn = async () => {
 				},
 				+elements.workerInput.value
 			)
-			updateStatusLabel(status)
+			updateStatusLabel(status, message)
 		} catch (error) {
 			handleUIError(error, 'Error saving board inventory:')
 		}
 	}
 }
 
-export const handleFetchButton = async () => {
+export const handleFetchBtn = async () => {
 	try {
-		const { data, status } = await fetchOptions()
+		const { data, status, message } = await fetchOptions()
 		if (!data) throw new Error('Unexpected error')
 		fillFields(data as Options)
 		localStorage.setItem('data', JSON.stringify(data))
-		updateStatusLabel(status)
+		updateStatusLabel(status, message)
 	} catch (error) {
 		handleUIError(error, 'Error fetching options:')
 	}
 }
 
-export const updateStatusLabel = (status: number) => {
+export const updateStatusLabel = (status: number, message: string) => {
 	if (!elements.statusCodeLabel) return
 	elements.statusCodeLabel.style.visibility = 'visible'
-	elements.statusCodeLabel.textContent = status.toString()
-	elements.statusCodeLabel.style.color = status === 201 || status === 200 ? 'green' : 'red'
+	elements.statusCodeLabel.textContent = `${message}:${status.toString()}`
+	elements.statusCodeLabel.style.color =
+		status === 201 || status === 200 ? 'green' : 'red'
 	if (timeout) clearTimeout(timeout)
 	timeout = setTimeout(() => {
 		if (!elements.statusCodeLabel) return

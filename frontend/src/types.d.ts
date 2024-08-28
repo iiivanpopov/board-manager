@@ -22,10 +22,17 @@ interface BoardInventoryType {
 }
 
 interface ApiResponse {
-	data: Options | { message: string }
+	data?: Options
+	message: string
 	status: number
 }
 
 type Timeout = ReturnType<typeof setTimeout>
 
-export type { ApiResponse, BoardInspectionType, BoardInventoryType, Options, Timeout }
+export type {
+	ApiResponse,
+	BoardInspectionType,
+	BoardInventoryType,
+	Options,
+	Timeout,
+}

@@ -9,13 +9,19 @@
 	</head>
 	<body class="bg-gray-100 min-h-screen flex items-center justify-center">
 		<div class="wrapper w-full max-w-4xl bg-white shadow-md rounded-lg p-6">
-			<header class="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between">
+			<header
+				class="mb-6 flex flex-col md:flex-row items-start md:items-center justify-between"
+			>
 				<div class="flex items-center">
-					<button class="fetch-data bg-blue-500 text-white px-4 py-2 rounded mr-4">
+					<button
+						class="fetch-data bg-blue-500 text-white px-4 py-2 rounded mr-4 ease-linear transition-colors"
+					>
 						Fetch options
 					</button>
 					<div class="field mb-4 md:mb-0">
-						<label for="worker" class="label block text-gray-700 mb-2">Worker</label>
+						<label for="worker" class="label block text-gray-700 mb-2"
+							>Worker</label
+						>
 						<input
 							id="worker"
 							class="input no-spin form-input w-full border border-gray-300 rounded"
@@ -29,7 +35,9 @@
 			</header>
 			<div class="fields grid grid-cols-1 md:grid-cols-2 gap-6">
 				<div class="fieldset inspection p-4 border border-gray-200 rounded">
-					<button class="save-inspection bg-green-500 text-white px-4 py-2 rounded mb-4">
+					<button
+						class="save-inspection bg-green-500 text-white px-4 py-2 rounded mb-4 transition-colors ease-linear"
+					>
 						Save board inspection
 					</button>
 					<div class="field mb-4">
@@ -44,7 +52,9 @@
 						/>
 					</div>
 					<div class="field mb-4">
-						<label for="inspector" class="label block text-gray-700 mb-2">Inspector</label>
+						<label for="inspector" class="label block text-gray-700 mb-2"
+							>Inspector</label
+						>
 						<select
 							id="inspector"
 							class="input select form-select w-full border border-gray-300 rounded"
@@ -52,7 +62,9 @@
 						></select>
 					</div>
 					<div class="field mb-4">
-						<label for="inspection-board" class="label block text-gray-700 mb-2">Board</label>
+						<label for="inspection-board" class="label block text-gray-700 mb-2"
+							>Board</label
+						>
 						<select
 							id="inspection-board"
 							class="input select form-select w-full border border-gray-300 rounded"
@@ -60,7 +72,9 @@
 						></select>
 					</div>
 					<div class="field mb-4">
-						<label for="problem-type" class="label block text-gray-700 mb-2">Problem type</label>
+						<label for="problem-type" class="label block text-gray-700 mb-2"
+							>Problem type</label
+						>
 						<select
 							id="problem-type"
 							class="input select form-select w-full border border-gray-300 rounded"
@@ -68,7 +82,9 @@
 						></select>
 					</div>
 					<div class="field mb-4">
-						<label for="problem" class="label block text-gray-700 mb-2">Problem</label>
+						<label for="problem" class="label block text-gray-700 mb-2"
+							>Problem</label
+						>
 						<select
 							id="problem"
 							class="input select form-select w-full border border-gray-300 rounded"
@@ -77,7 +93,9 @@
 					</div>
 				</div>
 				<div class="fieldset inventory p-4 border border-gray-200 rounded">
-					<button class="save-inventory bg-green-500 text-white px-4 py-2 rounded mb-4">
+					<button
+						class="save-inventory bg-green-500 text-white px-4 py-2 rounded mb-4 transition-colors ease-linear"
+					>
 						Save inventory
 					</button>
 					<div class="field mb-4">
@@ -92,7 +110,9 @@
 						/>
 					</div>
 					<div class="field mb-4">
-						<label for="inventory-board" class="label block text-gray-700 mb-2">Board</label>
+						<label for="inventory-board" class="label block text-gray-700 mb-2"
+							>Board</label
+						>
 						<select
 							id="inventory-board"
 							class="input select form-select w-full border border-gray-300 rounded"
@@ -100,7 +120,9 @@
 						></select>
 					</div>
 					<div class="field mb-4">
-						<label for="quantity" class="label block text-gray-700 mb-2">Quantity</label>
+						<label for="quantity" class="label block text-gray-700 mb-2"
+							>Quantity</label
+						>
 						<input
 							id="quantity"
 							class="input no-spin form-input w-full border border-gray-300 rounded"
