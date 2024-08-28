@@ -12,7 +12,7 @@ const saveBoardInventory = async (
 			return { status: 400, message: 'Unexpected worker number' }
 		}
 
-		if (hasEmptyField(record)) {
+		if (hasEmptyField(record) || record.quantity == 0) {
 			return { status: 400, message: 'Unexpected data' }
 		}
 

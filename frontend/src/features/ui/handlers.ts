@@ -54,7 +54,7 @@ export const handleInventoryBtn = async () => {
 					board: elements.inventory.boardField.value,
 					quantity: +elements.inventory.quantityField.value,
 				},
-				Math.abs(+elements.workerInput.value) || 1
+				+elements.workerInput.value
 			)
 			updateStatusLabel(status, message)
 		} catch (error) {
