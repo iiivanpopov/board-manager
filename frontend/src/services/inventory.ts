@@ -16,8 +16,8 @@ const saveBoardInventory = async (
 			return { status: 400, message: 'Unexpected data' }
 		}
 
-		const response = await apiClient.post(`/api/inventory/${worker}`, record)
-		return { status: response.status, message: 'Successful' }
+		const { status } = await apiClient.post(`/api/inventory/${worker}`, record)
+		return { status, message: 'Successful' }
 	} catch (error) {
 		return handleApiError(error)
 	}

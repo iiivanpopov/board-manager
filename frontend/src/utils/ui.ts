@@ -2,21 +2,30 @@ import { Options } from '@/types'
 import { elements } from '@features/ui/elements'
 import { getWeekNumber } from '@utils/date'
 
-export const setOptions = (field: HTMLSelectElement | null, values: string[]) => {
+export const setOptions = (
+	field: HTMLSelectElement | null,
+	values: string[]
+) => {
 	if (!field) return
 	field.innerHTML = '<option value="">None</option>'
 	values.forEach(value => {
 		const option = document.createElement('option')
+		option.classList.add('text-xs', 'md:text-base')
 		option.value = value
 		option.textContent = value
 		field.appendChild(option)
 	})
 }
 
-export const updateWeekLabel = (selectorPrefix: string, dateField: HTMLInputElement | null) => {
+export const updateWeekLabel = (
+	selectorPrefix: string,
+	dateField: HTMLInputElement | null
+) => {
 	if (!dateField) return
 	const weekNumber = getWeekNumber(new Date(dateField.value)).toString()
-	const label = document.querySelector<HTMLSpanElement>(`${selectorPrefix} .field .label span`)
+	const label = document.querySelector<HTMLSpanElement>(
+		`${selectorPrefix} .field .label span`
+	)
 	if (label) label.textContent = weekNumber
 }
 

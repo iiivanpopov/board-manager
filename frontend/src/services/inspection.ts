@@ -14,8 +14,8 @@ const saveBoardInspection = async (
 		if (hasEmptyField(record))
 			return { status: 400, message: 'Unexpected data' }
 
-		const response = await apiClient.post(`/api/inspection/${worker}`, record)
-		return { status: response.status, message: 'Successful' }
+		const { status } = await apiClient.post(`/api/inspection/${worker}`, record)
+		return { status, message: 'Successful' }
 	} catch (error) {
 		return handleApiError(error)
 	}
