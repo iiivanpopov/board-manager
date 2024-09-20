@@ -1,12 +1,10 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:13
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydb
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - '5432:5432'
     volumes:
@@ -31,21 +29,23 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgres://user:password@db:5432/mydb
-      SERVER_PORT: 3002
+      DATABASE_URL: ${DATABASE_URL}
+      SERVER_PORT: ${SERVER_PORT}
     ports:
-      - '3002:3002'
+      - '${SERVER_PORT}:${SERVER_PORT}'
 
   frontend:
     build:
       context: ./frontend
     container_name: board-manager-frontend
     ports:
-      - '3000:3000'
+      - '3000:80'
     depends_on:
       - backend
     environment:
-      SERVER_PORT: 3002
+      SERVER_PORT: ${SERVER_PORT}
+      HOST_NAME: ${HOST_NAME}
+      VITE_SERVER_URL: ${VITE_SERVER_URL}
 
 volumes:
   postgres_data:

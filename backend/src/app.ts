@@ -1,29 +1,31 @@
-import { connect, disconnect } from '@controllers/database'
-import routes from '@routes/routes'
+import router from '@routes/routes'
+import prisma from '@utils/prisma'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import express from 'express'
+import errorMiddleware from './middleware/error.middleware'
 
 dotenv.config()
 
 const app = express()
-const port = process.env.SERVER_PORT || 3002
+const port = process.env.SERVER_PORT || 2999
 
 app.use(cors())
 app.use(express.json())
-app.use(routes)
 
-const start = async () => {
-	await connect().then(() =>
-		app.listen(port, () => {
-			console.log(`HTTP server is running on localhost:${port}`)
-		})
-	)
-}
+app.use('/api', router)
 
-start()
+app.use(errorMiddleware)
+
+// IIFE start function
+;(async () => {
+	await prisma.$connect()
+	app.listen(port, () => {
+		console.log(`HTTP server is running on localhost:${port}`)
+	})
+})()
 
 process.on('SIGINT', async () => {
-	await disconnect()
+	await prisma.$disconnect()
 	process.exit(0)
 })

@@ -1,21 +1,28 @@
-import type { Request, Response } from 'express'
+import DataController from '@controllers/data.controller'
+import InspectionController from '@controllers/inspection.controller'
+import InventoryController from '@controllers/inventory.controller'
+import DataService from '@services/data.service'
+import InspectionService from '@services/inspection.service'
+import InventoryService from '@services/inventory.service'
+import prisma from '@utils/prisma'
 import { Router } from 'express'
-import handleData from './data'
-import handleInspection from './inspection'
-import handleInventory from './inventory'
+
+const inspectionService = new InspectionService(prisma)
+const inventoryService = new InventoryService(prisma)
+const dataService = new DataService()
+
+const inspectionController = new InspectionController(inspectionService)
+const inventoryController = new InventoryController(inventoryService)
+const dataController = new DataController(dataService)
 
 const router = Router()
 
-router.post('/api/inspection/:id', async (req: Request, res: Response) => {
-	await handleInspection(req, res)
-})
+router.post('/inspection/:worker', inspectionController.saveInspectionRecord)
+router.delete('/inspection/:id', inspectionController.deleteInspectionRecord)
 
-router.post('/api/inventory/:id', async (req: Request, res: Response) => {
-	await handleInventory(req, res)
-})
+router.post('/inventory/:worker', inventoryController.saveInventoryRecord)
+router.delete('/inventory/:id', inventoryController.deleteInventoryRecord)
 
-router.get('/api/data', async (req: Request, res: Response) => {
-	await handleData(res)
-})
+router.get('/data', dataController.fetchData)
 
 export default router

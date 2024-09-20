@@ -8,38 +8,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model BoardInspection1 {
-  id                 Int      @id @default(autoincrement())
-  date               DateTime @default(now())
-  week               Int
-  inspectorName      String
-  board              String
-  problemType        String
-  problemDescription String
+model BoardInspection {
+  id         Int      @id @default(autoincrement())
+  date       DateTime @default(now())
+  week       Int
+  inspector  String
+  product    String
+  defectType String
+  defect     String
+  worker     Int
 }
 
-model BoardInventory1 {
+model BoardInventory {
   id       Int      @id @default(autoincrement())
   date     DateTime @default(now())
   week     Int
   quantity Int
-  board    String
-}
-
-model BoardInspection2 {
-  id                 Int      @id @default(autoincrement())
-  date               DateTime @default(now())
-  week               Int
-  inspectorName      String
-  board              String
-  problemType        String
-  problemDescription String
-}
-
-model BoardInventory2 {
-  id       Int      @id @default(autoincrement())
-  date     DateTime @default(now())
-  week     Int
-  quantity Int
-  board    String
+  product  String
+  worker   Int
 }

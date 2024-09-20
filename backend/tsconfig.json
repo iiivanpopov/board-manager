@@ -14,10 +14,9 @@
 		"paths": {
 			"@/*": ["*"],
 			"@controllers/*": ["controllers/*"],
+			"@services/*": ["services/*"],
 			"@routes/*": ["routes/*"],
 			"@utils/*": ["utils/*"]
 		}
-	},
-	"include": ["src"],
-	"exclude": ["node_modules"]
+	}
 }

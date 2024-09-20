@@ -1,38 +1,92 @@
-interface Options {
+import type { FC, PropsWithChildren } from 'react'
+
+export type setter<T = string> = (value: T) => void
+
+export type onClick = () => void
+
+export interface SelectOptionsType {
 	inspectors: string[]
-	boards: string[]
-	problems: string[]
-	problemTypes: string[]
+	defectTypes: string[]
+	defects: string[]
+	products: string[]
 }
 
-interface BoardInspectionType {
+export interface UseInspectionPayload {
 	date: Date
-	week: number
-	inspectorName: string
-	board: string
-	problemType: string
-	problemDescription: string
+	inspector: string
+	product: string
+	defectType: string
+	defect: string
+	worker: string
+	inspectionId: string
 }
 
-interface BoardInventoryType {
+export interface UseInventoryPayload {
 	date: Date
-	week: number
-	quantity: number
-	board: string
+	quantity: string
+	product: string
+	worker: string
+	inventoryId: string
 }
 
-interface ApiResponse {
-	data?: Options
-	message: string
-	status: number
+interface ButtonProps {
+	className?: string
+	disabled?: boolean
+	onClick: onClick
+}
+export type ButtonType = FC<PropsWithChildren<ButtonProps>>
+
+interface DateInputProps {
+	date: Date
+	setDate: setter<Date>
+}
+export type DateInputType = FC<DateInputProps>
+
+interface DropdownProps {
+	label: string
+	value: string
+	options: string[]
+	setter: setter
+	placeholder?: string
+}
+export type DropdownType = FC<DropdownProps>
+
+interface TextInputProps {
+	label: string
+	value: string
+	setter: setter
+	placeholder?: string
+}
+export type TextInputType = FC<TextInputProps>
+
+interface InspectionFormProps {
+	worker: string
+	options: SelectOptionsType | null
+	setStatusCode: setter
+}
+export type InspectionFormType = FC<InspectionFormProps>
+
+interface InventoryFormProps {
+	worker: string
+	products: string[]
+	setStatusCode: setter
+}
+export type InventoryFormType = FC<InventoryFormProps>
+
+export type UseInspectionType = (
+	payload: UseInspectionPayload,
+	setInspectionId: setter,
+	setStatusCode: setter
+) => {
+	saveInspection: () => Promise<void>
+	deleteInspection: () => Promise<void>
 }
 
-type Timeout = ReturnType<typeof setTimeout>
-
-export type {
-	ApiResponse,
-	BoardInspectionType,
-	BoardInventoryType,
-	Options,
-	Timeout,
+export type UseInventoryType = (
+	payload: UseInventoryPayload,
+	setInventoryId: setter,
+	setStatusCode: setter
+) => {
+	saveInventory: () => Promise<void>
+	deleteInventory: () => Promise<void>
 }

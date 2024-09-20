@@ -19,16 +19,11 @@ git clone https://github.com/webfryingpan/board-manager.git
 
 ### 2. Configure Your Data
 
-Modify the data in `backend/src/data` according to your requirements.
+Modify the data in `backend/data` according to your requirements.
 
 ### 3. Set Up Environment Variables
 
-Create and configure `.env` files in the appropriate directories:
-
-- For the backend: backend/.env
-- For the frontend: frontend/.env
-
-Ensure all necessary environment variables are set correctly.
+Create and configure `.env` file in the root directory.
 
 ### 4. Build the Project with Docker Compose
 
@@ -67,15 +62,3 @@ docker-compose build
 ### Accessing the Application
 
 The application should be accessible at `http://localhost:PORT` or at `http://YOUR_IP:PORT`
-
-## Troubleshooting
-
-- Docker
-
-  You can administrate your app with Docker desktop app
-
-- Environment Variables
-
-  Double-check that all required environment variables are set correctly in the .env files.
-
-For further assistance, please refer to the project's issues section or contact me.
