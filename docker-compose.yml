@@ -8,7 +8,7 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - bmpostgres:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -20,12 +20,11 @@ services:
     depends_on:
       - db
     volumes:
-      - pgadmin:/var/lib/pgadmin
+      - bmpgadmin:/var/lib/pgadmin
 
   backend:
     build:
       context: ./backend
-    container_name: board-manager-backend
     depends_on:
       - db
     environment:
@@ -37,7 +36,6 @@ services:
   frontend:
     build:
       context: ./frontend
-    container_name: board-manager-frontend
     ports:
       - '3000:80'
     depends_on:
@@ -48,5 +46,5 @@ services:
       VITE_SERVER_URL: ${VITE_SERVER_URL}
 
 volumes:
-  postgres_data:
-  pgadmin:
+  bmpostgres:
+  bmpgadmin:
