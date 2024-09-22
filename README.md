@@ -6,8 +6,8 @@ A project to manage boards using Docker and Prisma.
 
 ### Prerequisites
 
-1. [Docker](https://docs.docker.com/engine/install/) - Ensure Docker is installed and running on your machine.
-2. [Git](https://git-scm.com/downloads) - Ensure Git is installed.
+1. [Docker](https://docs.docker.com/engine/install/)
+2. [Git](https://git-scm.com/downloads)
 
 ### Steps
 
@@ -23,7 +23,7 @@ Modify the data in `backend/data` according to your requirements.
 
 ### 3. Set Up Environment Variables
 
-Create and configure `.env` file in the root directory.
+Create and configure `.env` files in the `root`, `frontend` and `backend` directories.
 
 ### 4. Build the Project with Docker Compose
 
@@ -56,9 +56,3 @@ git pull
 ```bash
 docker-compose build
 ```
-
-## Additional Information
-
-### Accessing the Application
-
-The application should be accessible at `http://localhost:PORT` or at `http://YOUR_IP:PORT`
