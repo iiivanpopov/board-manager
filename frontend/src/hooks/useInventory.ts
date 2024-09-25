@@ -8,7 +8,7 @@ const useInventory: UseInventoryType = (
 	setInventoryId,
 	setStatusCode
 ) => {
-	const isSaveDataValid = () => worker && product && quantity
+	const isSaveDataValid = () => worker && product && +quantity > 0
 
 	const saveInventory = async () => {
 		if (!isSaveDataValid()) return

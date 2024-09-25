@@ -63,7 +63,7 @@ const InspectionForm: InspectionFormType = ({
 			<div className='grid md:grid-cols-2 gap-5'>
 				<Button
 					disabled={
-						!inspector || !defectType || !defect || !product || !date || !worker
+						!(inspector && defectType && defect && product && date && worker)
 					}
 					className='bg-green-300'
 					onClick={saveInspection}

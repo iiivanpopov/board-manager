@@ -43,7 +43,7 @@ const InventoryForm: InventoryFormType = ({
 
 			<div className='grid md:grid-cols-2 gap-5'>
 				<Button
-					disabled={!quantity || !product || !date || !worker}
+					disabled={!(+quantity > 0 && product && date && worker)}
 					className='bg-green-300'
 					onClick={saveInventory}
 				>

@@ -3,7 +3,7 @@
 		"start:dev": "bun run --hot ./src/app.ts",
 		"start:prod": "bun ./dist/bundle.js",
 		"start:migration:prod": "bunx --bun prisma migrate deploy && bun run start:prod",
-		"build": "bun build ./src/app.ts --outfile ./dist/bundle.js --minify --sourcemap --target bun"
+		"build": "bun build ./src/app.ts --outfile ./dist/bundle.js --minify --target bun"
 	},
 	"name": "backend",
 	"private": true,
@@ -11,18 +11,18 @@
 	"type": "module",
 	"module": "./src/app.ts",
 	"dependencies": {
-		"@prisma/client": "^5.19.1",
+		"@prisma/client": "^5.20.0",
 		"bun": "^1.1.29",
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.5",
 		"express": "^4.21.0",
-		"prisma": "^5.19.1"
+		"prisma": "^5.20.0"
 	},
 	"devDependencies": {
-		"@types/bun": "^1.1.9",
+		"@types/bun": "^1.1.10",
 		"@types/cors": "^2.8.17",
 		"@types/express": "^4.17.21",
-		"@types/node": "^20.16.5",
+		"@types/node": "^20.16.7",
 		"typescript": "^5.6.2"
 	}
 }
