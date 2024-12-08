@@ -8,7 +8,7 @@ class InspectionService {
 	}
 
 	async saveInspectionRecord(
-		data: Omit<BoardInspection, 'id'>
+		data: Omit<BoardInspection, 'id' | 'createdAt'>
 	): Promise<BoardInspection> {
 		const inspection = await this.prisma.boardInspection.create({
 			data,

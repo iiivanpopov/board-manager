@@ -1,0 +1,37 @@
+import {
+	faPlus,
+	faServer,
+	faSignIn,
+	faSignOut,
+} from '@fortawesome/free-solid-svg-icons'
+import { useContext } from 'react'
+import { Context } from '../main'
+import { NavButton } from './NavButton'
+import { NavLink } from './NavLink'
+
+export const Header = () => {
+	const { store } = useContext(Context)
+
+	return (
+		<div className='w-screen py-2 md:h-24 bg-gray-200 shadow-md flex justify-center items-center text-center text-xl md:text-2xl'>
+			<div className='w-3/4 flex flex-col md:flex-row justify-between'>
+				<div className='flex justify-center'>
+					<NavLink path='/' icon={faServer}>
+						Main
+					</NavLink>
+				</div>
+				<div className='flex flex-col md:flex-row justify-center items-center md:space-x-10'>
+					<NavLink path='/login' icon={faSignIn}>
+						Login
+					</NavLink>
+					<NavLink path='/registration' icon={faPlus}>
+						Registration
+					</NavLink>
+					<NavButton onClick={() => store.logout()} icon={faSignOut}>
+						Logout
+					</NavButton>
+				</div>
+			</div>
+		</div>
+	)
+}

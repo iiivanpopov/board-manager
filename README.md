@@ -1,7 +1,3 @@
-# Board Manager
-
-A project to manage boards using Docker and Prisma.
-
 ## Installation
 
 ### Prerequisites
@@ -19,7 +15,7 @@ git clone https://github.com/webfryingpan/board-manager.git
 
 ### 2. Configure Your Data
 
-Modify the data in `backend/data` according to your requirements.
+Set up the boards/defects/defect types options in `backend/data` folder.
 
 ### 3. Set Up Environment Variables
 
@@ -28,8 +24,6 @@ Create and configure `.env` files in the `root`, `frontend` and `backend` direct
 ### 4. Build the Project with Docker Compose
 
 ```bash
-cd board-manager
-
 docker-compose build
 ```
 
@@ -38,10 +32,6 @@ docker-compose build
 ```bash
 docker-compose up
 ```
-
-### 7. Congratulations
-
-Your project should now be up and running.
 
 ## Updating the app
 

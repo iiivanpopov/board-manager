@@ -11,9 +11,6 @@ COPY --from=install /temp/prod/node_modules node_modules
 COPY . .
 RUN bun run build
 
-FROM nginx:alpine
-COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+EXPOSE 3000:3000
 
-EXPOSE 3000:80
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["bun", "run", "start:preview"]

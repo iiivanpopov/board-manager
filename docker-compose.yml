@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:13
+    image: postgres:15-alpine
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -8,7 +8,7 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - bmpostgres:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -20,7 +20,7 @@ services:
     depends_on:
       - db
     volumes:
-      - bmpgadmin:/var/lib/pgadmin
+      - pgadmin:/var/lib/pgadmin
 
   backend:
     build:
@@ -30,6 +30,9 @@ services:
     environment:
       DATABASE_URL: ${DATABASE_URL}
       SERVER_PORT: ${SERVER_PORT}
+      SECRET_KEY: ${SECRET_KEY}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      REFRESH_SECRET_KEY: ${REFRESH_SECRET_KEY}
     ports:
       - '${SERVER_PORT}:${SERVER_PORT}'
 
@@ -37,13 +40,12 @@ services:
     build:
       context: ./frontend
     ports:
-      - '3000:80'
+      - '3000:3000'
     depends_on:
       - backend
     environment:
-      SERVER_PORT: ${SERVER_PORT}
-      VITE_SERVER_URL: ${VITE_SERVER_URL}
+      VITE_API_URL: ${VITE_API_URL}
 
 volumes:
-  bmpostgres:
-  bmpgadmin:
+  postgres:
+  pgadmin:

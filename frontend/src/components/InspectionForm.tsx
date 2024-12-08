@@ -1,86 +1,108 @@
-import { useState } from 'react'
-import useInspection from '../hooks/useInspection'
-import type { InspectionFormType } from '../types'
-import Button from './shared/Button'
-import DateInput from './shared/DateInput'
-import Dropdown from './shared/Dropdown'
+import clsx from 'clsx'
+import { observer } from 'mobx-react-lite'
+import { useCallback, useContext, useMemo, useState } from 'react'
+import { formatDate, getWeekNumber } from '../helpers/date'
+import { Context } from '../main'
+import { Button } from './Button'
+import { DateInput } from './DateInput'
+import { Dropdown } from './Dropdown'
 
-const InspectionForm: InspectionFormType = ({
-	worker,
-	options,
-	setStatusCode,
-}) => {
-	const [inspectionId, setInspectionId] = useState<string>('')
+export const InspectionForm: React.FC<{ className?: string }> = observer(
+	({ className }) => {
+		const { store } = useContext(Context)
+		const [date, setDate] = useState<string>(formatDate(new Date()))
+		const [product, setProduct] = useState<string>('')
+		const [defectType, setDefectType] = useState<string>('')
+		const [defect, setDefect] = useState<string>('')
 
-	const [date, setDate] = useState<Date>(new Date())
-	const [inspector, setInspector] = useState<string>('')
-	const [defectType, setDefectType] = useState<string>('')
-	const [defect, setDefect] = useState<string>('')
-	const [product, setProduct] = useState<string>('')
+		const weekNumber = useMemo(() => getWeekNumber(new Date(date)), [date])
 
-	const { saveInspection, deleteInspection } = useInspection(
-		{ date, inspector, product, defectType, defect, inspectionId, worker },
-		setInspectionId,
-		setStatusCode
-	)
+		const products = useMemo(() => store.options.products, [])
+		const defects = useMemo(() => store.options.defects, [])
+		const defectTypes = useMemo(() => store.options.defectTypes, [])
 
-	return (
-		<div className='grid grid-cols-1 gap-4'>
-			<DateInput date={date} setDate={setDate} />
+		const handleDateChange = useCallback((value: string) => setDate(value), [])
+		const handleProductChange = useCallback(
+			(value: string) => setProduct(value),
+			[]
+		)
 
-			<Dropdown
-				label='Inspector'
-				value={inspector}
-				options={options?.inspectors || []}
-				setter={setInspector}
-				placeholder='Select an inspector'
-			/>
+		const handleDefectTypeChange = useCallback(
+			(value: string) => setDefectType(value),
+			[]
+		)
+		const handleDefectChange = useCallback(
+			(value: string) => setDefect(value),
+			[]
+		)
 
-			<Dropdown
-				label='Defect Type'
-				value={defectType}
-				options={options?.defectTypes || []}
-				setter={setDefectType}
-				placeholder='Select a defect type'
-			/>
+		const isFormValid = useMemo(
+			() => product && defectType && defect && date,
+			[product, defectType, defect, date]
+		)
 
-			<Dropdown
-				label='Defect'
-				value={defect}
-				options={options?.defects || []}
-				setter={setDefect}
-				placeholder='Select a defect'
-			/>
+		const handleSave = useCallback(async () => {
+			try {
+				await store.saveInspection({
+					date: new Date(date),
+					week: weekNumber,
+					inspector: store.user.fullName,
+					product,
+					defectType,
+					defect,
+					worker: +store.worker,
+				})
+			} catch (error) {
+				console.error('Error saving inspection:', error)
+			}
+		}, [
+			date,
+			defect,
+			defectType,
+			product,
+			store.user,
+			store.worker,
+			weekNumber,
+		])
 
-			<Dropdown
-				label='Product'
-				value={product}
-				options={options?.products || []}
-				setter={setProduct}
-				placeholder='Select a product'
-			/>
-
-			<div className='grid md:grid-cols-2 gap-5'>
-				<Button
-					disabled={
-						!(inspector && defectType && defect && product && date && worker)
-					}
-					className='bg-green-300'
-					onClick={saveInspection}
-				>
+		return (
+			<div
+				className={clsx(
+					'grid grid-rows-5 items-center h-full w-full sm:w-3/4 gap-4 p-5',
+					className
+				)}
+			>
+				<DateInput
+					label={`Date | Week: ${weekNumber}`}
+					onChange={handleDateChange}
+					selected={date}
+				/>
+				<Dropdown
+					label='Product'
+					options={products}
+					showCheckbox
+					placeholder='Enter a product'
+					onChange={handleProductChange}
+					value={product}
+				/>
+				<Dropdown
+					label='Defect type'
+					options={defectTypes}
+					placeholder='Enter a defect type'
+					onChange={handleDefectTypeChange}
+					value={defectType}
+				/>
+				<Dropdown
+					label='Defect'
+					options={defects}
+					placeholder='Enter a defect'
+					onChange={handleDefectChange}
+					value={defect}
+				/>
+				<Button disabled={!isFormValid} color='green' onClick={handleSave}>
 					Save
 				</Button>
-
-				<Button
-					disabled={!inspectionId}
-					className='bg-red-300'
-					onClick={deleteInspection}
-				>
-					Delete
-				</Button>
 			</div>
-		</div>
-	)
-}
-
-export default InspectionForm
+		)
+	}
+)

@@ -8,7 +8,7 @@ class InventoryService {
 	}
 
 	async saveInventoryRecord(
-		data: Omit<BoardInventory, 'id'>
+		data: Omit<BoardInventory, 'id' | 'createdAt'>
 	): Promise<BoardInventory> {
 		const inventory = await this.prisma.boardInventory.create({
 			data,

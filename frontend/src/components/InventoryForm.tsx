@@ -1,65 +1,95 @@
-import { useState } from 'react'
-import useInventory from '../hooks/useInventory'
-import type { InventoryFormType } from '../types'
-import Button from './shared/Button'
-import DateInput from './shared/DateInput'
-import Dropdown from './shared/Dropdown'
-import TextInput from './shared/TextInput'
+import clsx from 'clsx'
+import { observer } from 'mobx-react-lite'
+import { useCallback, useContext, useMemo, useState } from 'react'
+import { formatDate, getWeekNumber } from '../helpers/date'
+import { Context } from '../main'
+import { Button } from './Button'
+import { DateInput } from './DateInput'
+import { Dropdown } from './Dropdown'
+import { Input } from './Input'
 
-const InventoryForm: InventoryFormType = ({
-	worker,
-	products,
-	setStatusCode,
-}) => {
-	const [inventoryId, setInventoryId] = useState<string>('')
-	const [date, setDate] = useState<Date>(new Date())
-	const [quantity, setQuantity] = useState<string>('0')
-	const [product, setProduct] = useState<string>('')
+export const InventoryForm: React.FC<{ className?: string }> = observer(
+	({ className }) => {
+		const [date, setDate] = useState<string>(formatDate(new Date()))
+		const [product, setProduct] = useState<string>('')
+		const [quantity, setQuantity] = useState<string>('')
 
-	const { saveInventory, deleteInventory } = useInventory(
-		{ date, product, inventoryId, quantity, worker },
-		setInventoryId,
-		setStatusCode
-	)
+		const { store } = useContext(Context)
 
-	return (
-		<div className='grid grid-cols-1 gap-4'>
-			<DateInput date={date} setDate={setDate} />
+		const products = useMemo(() => store.options.products, [])
 
-			<TextInput
-				label='Quantity'
-				value={String(quantity)}
-				setter={setQuantity}
-				placeholder='Enter a quantity'
-			/>
+		const weekNumber = useMemo(() => getWeekNumber(new Date(date)), [date])
 
-			<Dropdown
-				label='Product'
-				value={product}
-				options={products}
-				setter={setProduct}
-				placeholder='Select a product'
-			/>
+		const handleDateChange = useCallback((value: string) => setDate(value), [])
+		const handleProductChange = useCallback(
+			(value: string) => setProduct(value),
+			[]
+		)
+		const handleQuantityChange = useCallback(
+			(value: string) => setQuantity(value),
+			[]
+		)
 
-			<div className='grid md:grid-cols-2 gap-5'>
-				<Button
-					disabled={!(+quantity > 0 && product && date && worker)}
-					className='bg-green-300'
-					onClick={saveInventory}
-				>
-					Save
-				</Button>
+		const isFormValid = useMemo(
+			() => date && +quantity > 0 && product,
+			[date, quantity, product]
+		)
 
-				<Button
-					disabled={!inventoryId}
-					className='bg-red-300'
-					onClick={deleteInventory}
-				>
-					Delete
-				</Button>
+		const handleSave = useCallback(async () => {
+			try {
+				store.saveInventory({
+					date: new Date(date),
+					week: weekNumber,
+					quantity: +quantity,
+					product,
+					worker: +store.worker,
+				})
+			} catch (error) {
+				console.error('Error saving inventory:', error)
+			}
+		}, [date, weekNumber, quantity, product, store.worker])
+
+		return (
+			<div
+				className={clsx(
+					'grid grid-rows-5 items-center h-full w-full sm:w-3/4 gap-4 p-5',
+					className
+				)}
+			>
+				{store.isLoading ? (
+					'Loading'
+				) : (
+					<>
+						<DateInput
+							label={`Date | Week: ${weekNumber}`}
+							onChange={handleDateChange}
+							selected={date}
+						/>
+						<Dropdown
+							label='Product'
+							options={products}
+							placeholder='Enter a product'
+							onChange={handleProductChange}
+							showCheckbox
+							value={product}
+						/>
+						<Input
+							value={quantity}
+							onChange={handleQuantityChange}
+							label='Quantity'
+							placeholder='Enter a quantity'
+						/>
+						<Button
+							disabled={!isFormValid}
+							onClick={handleSave}
+							color='green'
+							className='row-start-5'
+						>
+							Save
+						</Button>
+					</>
+				)}
 			</div>
-		</div>
-	)
-}
-
-export default InventoryForm
+		)
+	}
+)

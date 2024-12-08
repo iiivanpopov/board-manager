@@ -4,7 +4,7 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				SUSE: ['SUSE', 'sans-serif'],
+				inter: ['"Inter"', 'sans-serif'],
 			},
 		},
 	},

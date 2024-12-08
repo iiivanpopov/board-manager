@@ -49,3 +49,8 @@ ehthumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+data/
+
+# Typescript
+tsconfig.app.tsbuildinfo
+tsconfig.node.tsbuildinfo

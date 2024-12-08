@@ -8,22 +8,39 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id           Int      @id @default(autoincrement())
+  fullName     String
+  passwordHash String
+  createdAt    DateTime @default(now()) @db.Timestamptz(3)
+  Token        Token?
+}
+
 model BoardInspection {
   id         Int      @id @default(autoincrement())
-  date       DateTime @default(now())
+  date       DateTime @default(now()) @db.Timestamptz(3)
   week       Int
   inspector  String
   product    String
   defectType String
   defect     String
   worker     Int
+  createdAt  DateTime @default(now()) @db.Timestamptz(3)
 }
 
 model BoardInventory {
-  id       Int      @id @default(autoincrement())
-  date     DateTime @default(now())
-  week     Int
-  quantity Int
-  product  String
-  worker   Int
+  id        Int      @id @default(autoincrement())
+  date      DateTime @default(now()) @db.Timestamptz(3)
+  week      Int
+  quantity  Int
+  product   String
+  worker    Int
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+}
+
+model Token {
+  id           Int    @id @default(autoincrement())
+  refreshToken String @unique
+  userId       Int    @unique
+  User         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
