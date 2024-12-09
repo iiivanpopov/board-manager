@@ -54,4 +54,6 @@ yarn-error.log*
 tsconfig.app.tsbuildinfo
 tsconfig.node.tsbuildinfo
 
-data/*
+backend/data/defect_types.txt
+backend/data/defects.txt
+backend/data/products.txt
