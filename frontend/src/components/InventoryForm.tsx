@@ -52,7 +52,7 @@ export const InventoryForm: React.FC<{ className?: string }> = observer(
 		return (
 			<div
 				className={clsx(
-					'grid grid-rows-5 items-center h-full w-full sm:w-3/4 gap-4 p-5',
+					'grid grid-rows-5 items-center h-full w-full lg:w-3/4 gap-4 p-5',
 					className
 				)}
 			>

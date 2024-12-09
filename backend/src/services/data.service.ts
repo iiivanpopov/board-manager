@@ -1,6 +1,5 @@
 import { readFileLines } from '@/utils/files'
 
-const INSPECTORS = 'inspectors.txt'
 const DEFECT_TYPES = 'defect_types.txt'
 const DEFECTS = 'defects.txt'
 const PRODUCTS = 'products.txt'

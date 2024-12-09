@@ -22,7 +22,7 @@ export const Modal: React.FC<
 		>
 			<div
 				className={clsx(
-					'bg-gray-200 p-6 rounded-lg shadow-md w-full max-w-xs sm:max-w-md',
+					'bg-gray-200 p-6 rounded-lg shadow-md w-full max-w-xs lg:max-w-md',
 					className
 				)}
 			>

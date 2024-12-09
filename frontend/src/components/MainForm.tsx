@@ -22,8 +22,8 @@ export const MainForm: React.FC = observer(() => {
 	return (
 		<>
 			{store.isAuth ? (
-				<Card className='mt-10 flex-col items-center lg:w-[450px]'>
-					<div className='bg-gray-300 h-12 flex px-5 sm:px-10 lg:px-20 justify-between text-base sm:text-lg w-full rounded-t-md shadow-md'>
+				<Card className='mt-10 flex-col text-sm lg:text-lg items-center w-3/4 lg:w-[450px]'>
+					<div className='bg-gray-300 h-12 flex px-5 lg:px-10 lg:px-20 justify-between text-base lg:text-lg w-full rounded-t-md shadow-md'>
 						<button
 							onClick={() => setMode('Inspection')}
 							className={inspectionButtonClass}
@@ -45,7 +45,7 @@ export const MainForm: React.FC = observer(() => {
 					</div>
 					<Modal
 						isOpen={isModalOpen}
-						className='max-w-full max-h-full w-[90vw] sm:w-[600px] p-5 sm:p-10'
+						className='max-w-full max-h-full w-[90vw] lg:w-[600px] p-5 lg:p-10'
 						onClose={handleCloseModal}
 					>
 						<RecordsList records={toJS(store.lastRecords)} />
@@ -53,7 +53,7 @@ export const MainForm: React.FC = observer(() => {
 					{mode === 'Inspection' ? <InspectionForm /> : <InventoryForm />}
 				</Card>
 			) : (
-				<h1 className='mt-10 text-2xl sm:text-4xl'>Login please</h1>
+				<h1 className='mt-10 text-2xl lg:text-4xl'>Login please</h1>
 			)}
 		</>
 	)

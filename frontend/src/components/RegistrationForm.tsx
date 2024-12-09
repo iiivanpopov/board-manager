@@ -44,7 +44,7 @@ export const RegistrationForm: React.FC<{ className?: string }> = ({
 	}, [password, secretKey, fullName])
 
 	return (
-		<Card className='mt-10 px-10 py-5 h-[400px] w-3/4 md:w-96'>
+		<Card className='mt-10 px-10 py-5 h-[400px] w-3/4 lg:w-96'>
 			<div
 				className={clsx(
 					'flex flex-col items-center justify-between h-full',
@@ -52,7 +52,7 @@ export const RegistrationForm: React.FC<{ className?: string }> = ({
 				)}
 			>
 				<div className='flex flex-col items-center justify-center'>
-					<h1 className='text-2xl md:text-3xl'>Registration</h1>
+					<h1 className='text-2xl lg:text-3xl'>Registration</h1>
 					{error && <p className='text-red-600'>{error}</p>}
 				</div>
 				<Input

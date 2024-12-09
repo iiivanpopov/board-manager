@@ -25,7 +25,7 @@ export const Dropdown: React.FC<DropdownProps> = observer(
 				<select
 					value={value}
 					onChange={e => onChange(e.target.value)}
-					className='rounded-md border-2 px-4 py-2 border-[#D9D9D9] outline-none transition-colors delay-75 duration-150 focus:border-blue-600'
+					className='rounded-md w-full border-2 px-4 py-2 border-[#D9D9D9] outline-none transition-colors delay-75 duration-150 focus:border-blue-600'
 				>
 					{placeholder && (
 						<option value='' disabled>
