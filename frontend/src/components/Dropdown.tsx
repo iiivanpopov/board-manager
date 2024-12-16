@@ -4,7 +4,7 @@ import { Context } from '../main'
 import { Checkbox } from './Checkbox'
 
 interface DropdownProps {
-	options: string[]
+	options: ({ label: string; value: string } | string)[]
 	onChange: (value: string) => void
 	label?: string
 	value: string
@@ -37,11 +37,23 @@ export const Dropdown: React.FC<DropdownProps> = observer(
 							Loading...
 						</option>
 					) : (
-						options.map(option => (
-							<option key={option} value={option}>
-								{isIdMode ? option.split(' ')[0] : option}
-							</option>
-						))
+						<>
+							{options.map(option => {
+								if (typeof option == 'string') {
+									return (
+										<option key={option} value={option}>
+											{isIdMode ? option.split(' ')[0] : option}
+										</option>
+									)
+								} else if (option.label && option.value) {
+									return (
+										<option key={option.value} value={option.value}>
+											{isIdMode ? option.label.split(' ')[0] : option.label}
+										</option>
+									)
+								}
+							})}
+						</>
 					)}
 				</select>
 			),

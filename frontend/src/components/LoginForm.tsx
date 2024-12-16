@@ -27,7 +27,13 @@ export const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
 		() => Boolean(worker && password),
 		[worker, password]
 	)
-	const options = useMemo(() => ['1', '2'], [])
+	const options = useMemo(
+		() => [
+			{ label: '1. Before test', value: '1' },
+			{ label: '2. After test', value: '2' },
+		],
+		[]
+	)
 
 	const { store } = useContext(Context)
 
