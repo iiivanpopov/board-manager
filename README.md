@@ -45,3 +45,5 @@ git pull
 ```bash
 docker-compose build
 ```
+
+### Or update using update.bat(windows only) file in the root directory
