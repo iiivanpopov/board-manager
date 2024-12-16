@@ -3,6 +3,7 @@ class InventoryDTO {
 	week: number
 	quantity: number
 	product: string
+	inspector: string
 	worker: number
 
 	constructor(model: any) {
@@ -11,6 +12,7 @@ class InventoryDTO {
 		this.product = model.product
 		this.quantity = +model.quantity
 		this.worker = +model.worker
+		this.inspector = model.inspector
 	}
 }
 

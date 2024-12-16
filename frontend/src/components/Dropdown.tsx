@@ -65,7 +65,7 @@ export const Dropdown: React.FC<DropdownProps> = observer(
 		return (
 			<div className='flex flex-col w-full'>
 				{showCheckbox ? (
-					<div className='grid grid-cols-[5fr,1fr] gap-x-3'>
+					<div className='grid grid-cols-[4fr,1fr] gap-x-3'>
 						<div className='flex flex-col'>
 							{renderLabel}
 							{renderSelect}

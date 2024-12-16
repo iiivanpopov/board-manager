@@ -13,15 +13,14 @@
 git clone https://github.com/webfryingpan/board-manager.git
 ```
 
-### 2. Configure Your Data
+### 2. Configure
 
-Set up the boards/defects/defect types options in `backend/data` folder.
+Create and set up the boards/defects/defect types options in `backend/data` folder.
+(defects.txt, defect_types.txt, products.txt)
 
-### 3. Set Up Environment Variables
+Create and configure `.env` files in the `./`, `./frontend` and `./backend` directories.
 
-Create and configure `.env` files in the `root`, `frontend` and `backend` directories.
-
-### 4. Build the Project with Docker Compose
+### 4. Build the Project
 
 ```bash
 docker-compose build
@@ -33,7 +32,7 @@ docker-compose build
 docker-compose up
 ```
 
-## Updating the app
+## Updating
 
 ### 1. Pull from repository
 

@@ -22,7 +22,7 @@ export const MainForm: React.FC = observer(() => {
 	return (
 		<>
 			{store.isAuth ? (
-				<Card className='mt-10 flex-col text-sm lg:text-lg items-center w-3/4 lg:w-[450px]'>
+				<Card className='mt-10 flex-col text-sm lg:text-lg items-center w-1/2 lg:w-[500px]'>
 					<div className='bg-gray-300 h-12 flex px-5 lg:px-10 lg:px-20 justify-between text-base lg:text-lg w-full rounded-t-md shadow-md'>
 						<button
 							onClick={() => setMode('Inspection')}

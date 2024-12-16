@@ -1,6 +1,6 @@
 {
 	"scripts": {
-		"start:dev": "bunx --bun vite --host",
+		"start:dev": "bunx --bun --hot vite --host",
 		"start:preview": "bunx --bun vite preview --host --port 3000",
 		"build": "bunx --bun tsc -b && bunx --bun vite build",
 		"lint": "bunx --bun eslint ."

@@ -41,6 +41,7 @@ export const InventoryForm: React.FC<{ className?: string }> = observer(
 					date: new Date(date),
 					week: weekNumber,
 					quantity: +quantity,
+					inspector: store.user.fullName,
 					product,
 					worker: +store.worker,
 				})

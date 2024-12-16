@@ -15,6 +15,8 @@ export interface Inventory {
 	date: Date
 	week: number
 	quantity: number
+	inspector: string
+
 	product: string
 	worker: number
 	createdAt: Date
