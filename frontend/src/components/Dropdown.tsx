@@ -12,11 +12,16 @@ interface DropdownProps {
 	showCheckbox?: boolean
 }
 
+const useStore = () => {
+	const { store } = useContext(Context)
+	return store
+}
+
 export const Dropdown: React.FC<DropdownProps> = observer(
-	({ options, label, onChange, placeholder, value, showCheckbox }) => {
+	({ options, onChange, label, value, placeholder, showCheckbox }) => {
 		const [isIdMode, setIsIdMode] = useState(false)
 
-		const { store } = useContext(Context)
+		const store = useStore()
 
 		const toggleIdMode = useCallback(() => setIsIdMode(prev => !prev), [])
 
@@ -38,21 +43,22 @@ export const Dropdown: React.FC<DropdownProps> = observer(
 						</option>
 					) : (
 						<>
-							{options.map(option => {
-								if (typeof option == 'string') {
-									return (
-										<option key={option} value={option}>
-											{isIdMode ? option.split(' ')[0] : option}
-										</option>
-									)
-								} else if (option.label && option.value) {
-									return (
-										<option key={option.value} value={option.value}>
-											{isIdMode ? option.label.split(' ')[0] : option.label}
-										</option>
-									)
-								}
-							})}
+							{options &&
+								options.map(option => {
+									if (typeof option === 'string') {
+										return (
+											<option key={option} value={option}>
+												{isIdMode ? option.split(' ')[0] : option}
+											</option>
+										)
+									} else {
+										return (
+											<option key={option.value} value={option.value}>
+												{isIdMode ? option.label.split(' ')[0] : option.label}
+											</option>
+										)
+									}
+								})}
 						</>
 					)}
 				</select>
@@ -60,21 +66,21 @@ export const Dropdown: React.FC<DropdownProps> = observer(
 			[isIdMode, options, placeholder, value, onChange, store.isLoading]
 		)
 
-		const renderLabel = useMemo(() => label && <label>{label}</label>, [label])
+		const labelElement = useMemo(() => label && <label>{label}</label>, [label])
 
 		return (
 			<div className='flex flex-col w-full'>
 				{showCheckbox ? (
 					<div className='grid grid-cols-[3fr,1fr] gap-x-3'>
 						<div className='flex flex-col'>
-							{renderLabel}
+							{labelElement}
 							{renderSelect}
 						</div>
 						<Checkbox checked={isIdMode} onChange={toggleIdMode} />
 					</div>
 				) : (
 					<>
-						{renderLabel}
+						{labelElement}
 						{renderSelect}
 					</>
 				)}

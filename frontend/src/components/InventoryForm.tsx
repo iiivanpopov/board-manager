@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { observer } from 'mobx-react-lite'
 import { useCallback, useContext, useMemo, useState } from 'react'
-import { formatDate, getWeekNumber } from '../helpers/date'
+import { formatDate } from '../helpers/date'
 import { Context } from '../main'
 import { Button } from './Button'
 import { DateInput } from './DateInput'
@@ -18,7 +18,7 @@ export const InventoryForm: React.FC<{ className?: string }> = observer(
 
 		const products = useMemo(() => store.options.products, [])
 
-		const weekNumber = useMemo(() => getWeekNumber(new Date(date)), [date])
+		const weekNumber = useMemo(() => new Date(date).getWeek(), [date])
 
 		const handleDateChange = useCallback((value: string) => setDate(value), [])
 		const handleProductChange = useCallback(
