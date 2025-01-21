@@ -73,12 +73,11 @@ export const InspectionForm: React.FC<{ className?: string }> = observer(
 				)}
 			>
 				<DateInput
-					label={`Date | Week: ${weekNumber}`}
+					label={`Week: ${weekNumber}`}
 					onChange={handleDateChange}
 					selected={date}
 				/>
 				<Dropdown
-					label='Product'
 					options={products}
 					showCheckbox
 					placeholder='Enter a product'
@@ -86,14 +85,12 @@ export const InspectionForm: React.FC<{ className?: string }> = observer(
 					value={product}
 				/>
 				<Dropdown
-					label='Defect type'
 					options={defectTypes}
 					placeholder='Enter a defect type'
 					onChange={handleDefectTypeChange}
 					value={defectType}
 				/>
 				<Dropdown
-					label='Defect'
 					options={defects}
 					placeholder='Enter a defect'
 					onChange={handleDefectChange}

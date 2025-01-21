@@ -62,12 +62,11 @@ export const InventoryForm: React.FC<{ className?: string }> = observer(
 				) : (
 					<>
 						<DateInput
-							label={`Date | Week: ${weekNumber}`}
+							label={`Week: ${weekNumber}`}
 							onChange={handleDateChange}
 							selected={date}
 						/>
 						<Dropdown
-							label='Product'
 							options={products}
 							placeholder='Enter a product'
 							onChange={handleProductChange}
@@ -77,7 +76,6 @@ export const InventoryForm: React.FC<{ className?: string }> = observer(
 						<Input
 							value={quantity}
 							onChange={handleQuantityChange}
-							label='Quantity'
 							placeholder='Enter a quantity'
 						/>
 						<Button
