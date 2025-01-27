@@ -5,13 +5,11 @@ declare global {
 }
 
 Date.prototype.getWeek = function (): number {
-	let date = new Date(this.getTime())
-	date.setHours(0, 0, 0, 0)
-	date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7))
-	let week1 = new Date(date.getFullYear(), 0, 4)
-	const daysBetween = (date.getTime() - week1.getTime()) / 86400000
-	const adjustedDays = daysBetween - 3 + ((week1.getDay() + 6) % 7)
-	return Math.round(adjustedDays / 7)
+	const today = new Date(this.getTime())
+	const firstDayOfYear = new Date(today.getFullYear(), 0, 1)
+	const pastFromFirstDay =
+		(today.getTime() - firstDayOfYear.getTime()) / 1000 / 60 / 60 / 24
+	return Math.ceil((pastFromFirstDay + firstDayOfYear.getDay() - 1) / 7)
 }
 
 export const formatDate = (date: Date): string => {
