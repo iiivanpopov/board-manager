@@ -13,4 +13,4 @@ RUN bun run build
 
 EXPOSE 3000:3000
 
-CMD ["bun", "run", "start:preview"]
+CMD ["bun", "run", "prod"]
