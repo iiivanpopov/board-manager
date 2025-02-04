@@ -8,6 +8,7 @@ export interface Inspection {
 	defect: string
 	worker: number
 	createdAt: Date
+	quantity: number
 }
 
 export interface Inventory {
@@ -16,7 +17,6 @@ export interface Inventory {
 	week: number
 	quantity: number
 	inspector: string
-
 	product: string
 	worker: number
 	createdAt: Date

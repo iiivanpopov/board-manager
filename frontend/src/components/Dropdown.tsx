@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite'
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { useContext } from 'react'
 import { Context } from '../main'
-import { Checkbox } from './Checkbox'
 
 interface DropdownProps {
 	options: ({ label: string; value: string } | string)[]
@@ -12,21 +11,21 @@ interface DropdownProps {
 	showCheckbox?: boolean
 }
 
-const useStore = () => {
-	const { store } = useContext(Context)
-	return store
-}
-
 export const Dropdown: React.FC<DropdownProps> = observer(
-	({ options, onChange, label, value, placeholder, showCheckbox }) => {
-		const [isIdMode, setIsIdMode] = useState(false)
+	({ options, onChange, label, value, placeholder }) => {
+		const { store } = useContext(Context)
 
-		const store = useStore()
+		if (store.isLoading || !options) {
+			return (
+				<option value='' key='loading'>
+					Loading...
+				</option>
+			)
+		}
 
-		const toggleIdMode = useCallback(() => setIsIdMode(prev => !prev), [])
-
-		const renderSelect = useMemo(
-			() => (
+		return (
+			<div className='flex flex-col w-full'>
+				{label && <label>{label}</label>}
 				<select
 					value={value}
 					onChange={e => onChange(e.target.value)}
@@ -37,53 +36,17 @@ export const Dropdown: React.FC<DropdownProps> = observer(
 							{placeholder}
 						</option>
 					)}
-					{store.isLoading ? (
-						<option value='' key='loading'>
-							Loading...
-						</option>
-					) : (
-						<>
-							{options &&
-								options.map(option => {
-									if (typeof option === 'string') {
-										return (
-											<option key={option} value={option}>
-												{isIdMode ? option.split(' ')[0] : option}
-											</option>
-										)
-									} else {
-										return (
-											<option key={option.value} value={option.value}>
-												{isIdMode ? option.label.split(' ')[0] : option.label}
-											</option>
-										)
-									}
-								})}
-						</>
-					)}
+
+					{options.map(option => {
+						const optionValue =
+							typeof option === 'string' ? option : option.value
+						return (
+							<option key={optionValue} value={optionValue}>
+								{optionValue}
+							</option>
+						)
+					})}
 				</select>
-			),
-			[isIdMode, options, placeholder, value, onChange, store.isLoading]
-		)
-
-		const labelElement = useMemo(() => label && <label>{label}</label>, [label])
-
-		return (
-			<div className='flex flex-col w-full'>
-				{showCheckbox ? (
-					<div className='grid grid-cols-[3fr,1fr] gap-x-3'>
-						<div className='flex flex-col'>
-							{labelElement}
-							{renderSelect}
-						</div>
-						<Checkbox checked={isIdMode} onChange={toggleIdMode} />
-					</div>
-				) : (
-					<>
-						{labelElement}
-						{renderSelect}
-					</>
-				)}
 			</div>
 		)
 	}

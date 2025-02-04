@@ -1,5 +1,5 @@
-import clsx from 'clsx'
-import { memo, PropsWithChildren, useMemo } from 'react'
+import { memo, PropsWithChildren } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export const Button: React.FC<
 	PropsWithChildren<{
@@ -9,21 +9,22 @@ export const Button: React.FC<
 		color: 'red' | 'green' | 'blue'
 	}>
 > = memo(({ children, onClick, className, color, disabled }) => {
-	const buttonClass = useMemo(() => {
-		return clsx(
-			'rounded-md shadow-md text-white transition-colors px-16 py-3 outline-none delay-75 duration-150 ease-in',
-			{
-				'opacity-50 cursor-not-allowed hover:bg-black bg-black': disabled,
-				'bg-red-500 hover:bg-red-600': color === 'red' && !disabled,
-				'bg-green-500 hover:bg-green-600': color === 'green' && !disabled,
-				'bg-blue-500 hover:bg-blue-600': color === 'blue' && !disabled,
-			},
-			className
-		)
-	}, [color, disabled, className])
-
 	return (
-		<button className={buttonClass} disabled={disabled} onClick={onClick}>
+		<button
+			className={twMerge(
+				'rounded-md shadow-md cursor-pointer text-white transition-all font-medium px-16 py-3 outline-none duration-150 ease-in',
+				disabled
+					? 'cursor-not-allowed bg-gray-300 text-gray-500'
+					: color === 'red'
+					? 'bg-red-500 hover:bg-red-600'
+					: color === 'green'
+					? 'bg-green-500 hover:bg-green-600'
+					: 'bg-blue-500 hover:bg-blue-600',
+				className
+			)}
+			disabled={disabled}
+			onClick={onClick}
+		>
 			{children}
 		</button>
 	)

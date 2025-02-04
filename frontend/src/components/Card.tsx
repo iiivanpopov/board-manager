@@ -1,5 +1,5 @@
-import clsx from 'clsx'
 import { memo, PropsWithChildren } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export const Card: React.FC<
 	PropsWithChildren<{
@@ -8,7 +8,7 @@ export const Card: React.FC<
 > = memo(({ children, className }) => {
 	return (
 		<div
-			className={clsx(
+			className={twMerge(
 				'bg-gray-200 shadow-md rounded-lg flex justify-center',
 				className
 			)}

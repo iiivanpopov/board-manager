@@ -1,5 +1,5 @@
-import clsx from 'clsx'
 import React, { memo } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export const Checkbox: React.FC<{
 	className?: string
@@ -8,7 +8,9 @@ export const Checkbox: React.FC<{
 	onChange: () => void
 }> = memo(({ className, checked, label, onChange }) => {
 	return (
-		<div className={clsx('flex flex-col justify-center items-end', className)}>
+		<div
+			className={twMerge('flex flex-col justify-center items-end', className)}
+		>
 			{label && <label>{label}</label>}
 			<input
 				type='checkbox'

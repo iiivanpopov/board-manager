@@ -1,6 +1,6 @@
-import clsx from 'clsx'
 import React, { memo, PropsWithChildren } from 'react'
 import ReactDOM from 'react-dom'
+import { twMerge } from 'tailwind-merge'
 
 export const Modal: React.FC<
 	PropsWithChildren<{
@@ -17,11 +17,11 @@ export const Modal: React.FC<
 
 	return ReactDOM.createPortal(
 		<div
-			className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10'
+			className='fixed inset-0 bg-[rgba(0,0,0,0.5)] flex justify-center items-center z-10'
 			onClick={handleOverlayClick}
 		>
 			<div
-				className={clsx(
+				className={twMerge(
 					'bg-gray-200 p-6 rounded-lg shadow-md w-full max-w-xs lg:max-w-md',
 					className
 				)}

@@ -1,44 +1,54 @@
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { useCallback, useContext, useState } from 'react'
-import { useButtonClass } from '../hooks/useButtonClass'
+import { useContext, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { Context } from '../main'
 import { Card } from './Card'
 import { InspectionForm } from './InspectionForm'
 import { InventoryForm } from './InventoryForm'
+import LoginForm from './LoginForm'
 import { Modal } from './Modal'
 import { RecordsList } from './RecordsList'
 
 export const MainForm: React.FC = observer(() => {
 	const [mode, setMode] = useState<'Inspection' | 'Inventory'>('Inspection')
 	const [isModalOpen, setIsModalOpen] = useState(false)
+
 	const { store } = useContext(Context)
 
-	const inspectionButtonClass = useButtonClass('Inspection', mode)
-	const inventoryButtonClass = useButtonClass('Inventory', mode)
-
-	const handleCloseModal = useCallback(() => setIsModalOpen(false), [])
+	const handleCloseModal = () => setIsModalOpen(false)
 
 	return (
 		<>
 			{store.isAuth ? (
-				<Card className='mt-10 flex-col text-sm lg:text-lg items-center w-1/2 lg:w-[500px]'>
-					<div className='bg-gray-300 lg:h-12 h-20 flex lg:flex-row flex-col px-5 lg:px-10 lg:px-20 justify-between text-base lg:text-lg w-full rounded-t-md shadow-md'>
+				<Card className='mt-10 flex-col text-sm md:text-lg items-center w-full md:w-[500px]'>
+					<div className='bg-gray-300 md:h-12 h-20 flex md:flex-row flex-col px-5 md:px-20 justify-between text-base lg:text-lg w-full rounded-t-md shadow-md'>
 						<button
 							onClick={() => setMode('Inspection')}
-							className={inspectionButtonClass}
+							className={twMerge(
+								'hover:text-blue-600 transition-colors duration-300 ease-in',
+								mode == 'Inspection'
+									? 'text-blue-600 font-medium'
+									: 'text-black'
+							)}
 						>
 							Inspection
 						</button>
 						<button
 							onClick={() => setMode('Inventory')}
-							className={inventoryButtonClass}
+							className={twMerge(
+								'hover:text-blue-600 transition-colors duration-300 ease-in',
+								mode == 'Inventory' ? 'text-blue-600 font-medium' : 'text-black'
+							)}
 						>
 							Inventory
 						</button>
 						<button
 							onClick={() => setIsModalOpen(true)}
-							className='hover:text-blue-600 transition delay-75 duration-150 ease-in'
+							className={twMerge(
+								'hover:text-blue-600 transition delay-75 duration-150 ease-in',
+								isModalOpen ? 'text-blue-600 font-medium' : 'text-black'
+							)}
 						>
 							Records
 						</button>
@@ -53,7 +63,7 @@ export const MainForm: React.FC = observer(() => {
 					{mode === 'Inspection' ? <InspectionForm /> : <InventoryForm />}
 				</Card>
 			) : (
-				<h1 className='mt-10 text-2xl lg:text-4xl'>Login please</h1>
+				<LoginForm />
 			)}
 		</>
 	)

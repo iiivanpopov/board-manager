@@ -20,14 +20,14 @@ export default class Store {
 	worker = ''
 	lastRecords: RecordsArray = []
 	private _options: Options = {} as Options
-	isLoading: boolean = true
-
-	get options() {
-		return toJS(this._options)
-	}
+	isLoading = true
 
 	constructor() {
 		makeAutoObservable(this)
+	}
+
+	get options() {
+		return toJS(this._options)
 	}
 
 	private updateLocalStorage(key: string, value: string | null) {
@@ -47,8 +47,8 @@ export default class Store {
 		this.isAuth = isAuthenticated
 	}
 
-	setIsLoading(bool: boolean) {
-		this.isLoading = bool
+	setIsLoading(isLoading: boolean) {
+		this.isLoading = isLoading
 	}
 
 	setUser(user: IUser) {
@@ -69,6 +69,7 @@ export default class Store {
 
 	addLastRecord(record: Record & { type: 'inspection' | 'inventory' }) {
 		this.lastRecords.unshift(record)
+		if (this.lastRecords.length > 5) this.deleteLastRecord()
 	}
 
 	setOptions(options: Options) {
@@ -150,8 +151,6 @@ export default class Store {
 			id: response.data.inspection.id,
 			type: 'inspection',
 		})
-
-		if (this.lastRecords.length > 5) this.deleteLastRecord()
 	}
 
 	async deleteInspection(id: number) {
@@ -172,8 +171,6 @@ export default class Store {
 			createdAt: response.data.inventory.createdAt,
 			type: 'inventory',
 		})
-
-		if (this.lastRecords.length > 5) this.deleteLastRecord()
 	}
 
 	async deleteInventory(id: number) {
