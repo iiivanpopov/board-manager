@@ -1,7 +1,6 @@
 import { useContext, useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { Context } from './main'
-import Login from './pages/Login'
 import { Main } from './pages/Main'
 import Registration from './pages/Registration'
 
@@ -17,13 +16,12 @@ function App() {
 			store.setWorker(worker)
 		}
 		store.fetchOptions()
-	}, [])
+	}, [store])
 
 	return (
 		<BrowserRouter>
 			<Routes>
 				<Route path='/' element={<Main />} />
-				<Route path='login' element={<Login />} />
 				<Route path='registration' element={<Registration />} />
 			</Routes>
 		</BrowserRouter>

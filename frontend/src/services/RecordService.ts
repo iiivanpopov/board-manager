@@ -4,12 +4,13 @@ import { Inspection, Inventory } from '../models/RecordResponse'
 
 export default class RecordService {
 	static async saveInspection(
-		payload: Omit<Inspection, 'createdAt' | 'id'>
-	): Promise<AxiosResponse<{ inspection: Inspection }>> {
-		const response = await $api.post<{ inspection: Inspection }>(
-			`/inspection/${payload.worker}`,
-			{ ...payload }
-		)
+		payload: Omit<Inspection, 'createdAt' | 'id'>,
+		quantity: number
+	): Promise<AxiosResponse<{ inspections: Inspection[]; quantity: number }>> {
+		const response = await $api.post<{
+			inspections: Inspection[]
+			quantity: number
+		}>(`/inspection/${payload.worker}`, { ...payload, quantity })
 		return response
 	}
 

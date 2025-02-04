@@ -1,9 +1,4 @@
-import {
-	faPlus,
-	faServer,
-	faSignIn,
-	faSignOut,
-} from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faServer, faSignOut } from '@fortawesome/free-solid-svg-icons'
 import { useContext } from 'react'
 import { Context } from '../main'
 import { NavButton } from './NavButton'
@@ -21,9 +16,6 @@ export const Header = () => {
 					</NavLink>
 				</div>
 				<div className='flex flex-col lg:flex-row justify-center items-center lg:space-x-10'>
-					<NavLink path='/login' icon={faSignIn}>
-						Login
-					</NavLink>
 					<NavLink path='/registration' icon={faPlus}>
 						Registration
 					</NavLink>

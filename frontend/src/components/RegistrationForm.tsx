@@ -1,5 +1,5 @@
-import clsx from 'clsx'
 import { useCallback, useContext, useMemo, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { Context } from '../main'
 import { Button } from './Button'
 import { Card } from './Card'
@@ -46,7 +46,7 @@ export const RegistrationForm: React.FC<{ className?: string }> = ({
 	return (
 		<Card className='mt-10 px-10 py-5 h-[400px] w-3/4 lg:w-96'>
 			<div
-				className={clsx(
+				className={twMerge(
 					'flex flex-col items-center justify-between h-full',
 					className
 				)}

@@ -1,43 +1,33 @@
-import clsx from 'clsx'
 import { observer } from 'mobx-react-lite'
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { useContext, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { formatDate } from '../helpers/date'
 import { Context } from '../main'
 import { Button } from './Button'
+import { Checkbox } from './Checkbox'
 import { DateInput } from './DateInput'
 import { Dropdown } from './Dropdown'
 import { Input } from './Input'
 
 export const InventoryForm: React.FC<{ className?: string }> = observer(
 	({ className }) => {
+		const { store } = useContext(Context)
+
 		const [date, setDate] = useState<string>(formatDate(new Date()))
 		const [product, setProduct] = useState<string>('')
 		const [quantity, setQuantity] = useState<string>('')
 
-		const { store } = useContext(Context)
+		const [idMode, setIdMode] = useState<boolean>(false)
 
-		const products = useMemo(() => store.options.products, [])
+		const products = store.options.products
 
-		const weekNumber = useMemo(() => new Date(date).getWeek(), [date])
+		const weekNumber = new Date(date).getWeek()
 
-		const handleDateChange = useCallback((value: string) => setDate(value), [])
-		const handleProductChange = useCallback(
-			(value: string) => setProduct(value),
-			[]
-		)
-		const handleQuantityChange = useCallback(
-			(value: string) => setQuantity(value),
-			[]
-		)
+		const isFormValid = date && +quantity > 0 && product
 
-		const isFormValid = useMemo(
-			() => date && +quantity > 0 && product,
-			[date, quantity, product]
-		)
-
-		const handleSave = useCallback(async () => {
+		const handleSave = async () => {
 			try {
-				store.saveInventory({
+				await store.saveInventory({
 					date: new Date(date),
 					week: weekNumber,
 					quantity: +quantity,
@@ -48,46 +38,44 @@ export const InventoryForm: React.FC<{ className?: string }> = observer(
 			} catch (error) {
 				console.error('Error saving inventory:', error)
 			}
-		}, [date, weekNumber, quantity, product, store.worker])
+		}
 
 		return (
 			<div
-				className={clsx(
-					'grid grid-rows-5 items-center h-full w-full lg:w-3/4 gap-4 p-5',
+				className={twMerge(
+					'grid grid-rows-6 items-center h-full w-full lg:w-3/4 gap-4 p-5',
 					className
 				)}
 			>
-				{store.isLoading ? (
-					'Loading'
-				) : (
-					<>
-						<DateInput
-							label={`Week: ${weekNumber}`}
-							onChange={handleDateChange}
-							selected={date}
-						/>
-						<Dropdown
-							options={products}
-							placeholder='Enter a product'
-							onChange={handleProductChange}
-							showCheckbox
-							value={product}
-						/>
-						<Input
-							value={quantity}
-							onChange={handleQuantityChange}
-							placeholder='Enter a quantity'
-						/>
-						<Button
-							disabled={!isFormValid}
-							onClick={handleSave}
-							color='green'
-							className='row-start-5'
-						>
-							Save
-						</Button>
-					</>
-				)}
+				<DateInput
+					label={`Week: ${weekNumber}`}
+					onChange={setDate}
+					selected={date}
+				/>
+				<div className='flex gap-x-8'>
+					<Dropdown
+						options={
+							idMode ? products.map(prod => prod.split(' ')[0]) : products
+						}
+						placeholder='Enter a product'
+						onChange={setProduct}
+						value={product}
+					/>
+					<Checkbox checked={idMode} onChange={setIdMode} />
+				</div>
+				<Input
+					value={quantity}
+					onChange={setQuantity}
+					placeholder='Enter a quantity'
+				/>
+				<Button
+					disabled={!isFormValid}
+					onClick={handleSave}
+					color='green'
+					className='row-start-6'
+				>
+					Save
+				</Button>
 			</div>
 		)
 	}
