@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { makeAutoObservable, toJS } from 'mobx'
+import { toast } from 'react-toastify'
 import { API_URL } from '../api'
 import { AuthResponse } from '../models/AuthResponse'
 import { Options } from '../models/Options'
@@ -142,15 +143,22 @@ export default class Store {
 		}
 	}
 
-	async saveInspection(inspection: Omit<Inspection, 'createdAt' | 'id'>) {
-		const response = await RecordService.saveInspection(inspection)
+	async saveInspection(
+		inspection: Omit<Inspection, 'createdAt' | 'id'>,
+		quantity: number
+	) {
+		const response = await RecordService.saveInspection(inspection, quantity)
+		console.log(response.data)
+		for (const insp of response.data.inspections) {
+			this.addLastRecord({
+				...inspection,
+				createdAt: insp.createdAt,
+				id: insp.id,
+				type: 'inspection',
+			})
+		}
 
-		this.addLastRecord({
-			...inspection,
-			createdAt: response.data.inspection.createdAt,
-			id: response.data.inspection.id,
-			type: 'inspection',
-		})
+		toast.info(`Saved ${response.data.quantity} items.`)
 	}
 
 	async deleteInspection(id: number) {

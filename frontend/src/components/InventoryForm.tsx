@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge'
 import { formatDate } from '../helpers/date'
 import { Context } from '../main'
 import { Button } from './Button'
+import { Checkbox } from './Checkbox'
 import { DateInput } from './DateInput'
 import { Dropdown } from './Dropdown'
 import { Input } from './Input'
@@ -15,6 +16,8 @@ export const InventoryForm: React.FC<{ className?: string }> = observer(
 		const [date, setDate] = useState<string>(formatDate(new Date()))
 		const [product, setProduct] = useState<string>('')
 		const [quantity, setQuantity] = useState<string>('')
+
+		const [idMode, setIdMode] = useState<boolean>(false)
 
 		const products = store.options.products
 
@@ -49,13 +52,17 @@ export const InventoryForm: React.FC<{ className?: string }> = observer(
 					onChange={setDate}
 					selected={date}
 				/>
-				<Dropdown
-					options={products}
-					placeholder='Enter a product'
-					onChange={setProduct}
-					showCheckbox
-					value={product}
-				/>
+				<div className='flex gap-x-8'>
+					<Dropdown
+						options={
+							idMode ? products.map(prod => prod.split(' ')[0]) : products
+						}
+						placeholder='Enter a product'
+						onChange={setProduct}
+						value={product}
+					/>
+					<Checkbox checked={idMode} onChange={setIdMode} />
+				</div>
 				<Input
 					value={quantity}
 					onChange={setQuantity}

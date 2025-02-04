@@ -16,8 +16,12 @@ class InspectionController {
 		const data = new InspectionDTO({ ...req.body, ...req.params })
 
 		try {
-			const inspection = await this.inspectionService.saveInspectionRecord(data)
-			res.status(201).json({ inspection })
+			const { inspections, quantity } =
+				await this.inspectionService.saveInspectionRecord(
+					data,
+					req.body.quantity
+				)
+			res.status(201).json({ inspections, quantity })
 		} catch (error) {
 			next(error)
 		}

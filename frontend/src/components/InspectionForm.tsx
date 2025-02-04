@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge'
 import { formatDate } from '../helpers/date'
 import { Context } from '../main'
 import { Button } from './Button'
+import { Checkbox } from './Checkbox'
 import { DateInput } from './DateInput'
 import { Dropdown } from './Dropdown'
 import { Input } from './Input'
@@ -17,6 +18,7 @@ export const InspectionForm: React.FC<{ className?: string }> = observer(
 		const [defectType, setDefectType] = useState<string>('')
 		const [defect, setDefect] = useState<string>('')
 		const [quantity, setQuantity] = useState<string>('')
+		const [idMode, setIdMode] = useState<boolean>(false)
 
 		const weekNumber = new Date(date).getWeek()
 
@@ -28,16 +30,18 @@ export const InspectionForm: React.FC<{ className?: string }> = observer(
 
 		const handleSave = async () => {
 			try {
-				await store.saveInspection({
-					date: new Date(date),
-					week: weekNumber,
-					quantity: +quantity,
-					inspector: store.user.fullName,
-					product,
-					defectType,
-					defect,
-					worker: +store.worker,
-				})
+				await store.saveInspection(
+					{
+						date: new Date(date),
+						week: weekNumber,
+						inspector: store.user.fullName,
+						product,
+						defectType,
+						defect,
+						worker: +store.worker,
+					},
+					+quantity
+				)
 			} catch (error) {
 				console.error('Error saving inspection:', error)
 			}
@@ -60,13 +64,17 @@ export const InspectionForm: React.FC<{ className?: string }> = observer(
 					onChange={setQuantity}
 					placeholder='Enter a quantity'
 				/>
-				<Dropdown
-					options={products}
-					showCheckbox
-					placeholder='Enter a product'
-					onChange={setProduct}
-					value={product}
-				/>
+				<div className='flex gap-x-8'>
+					<Dropdown
+						options={
+							idMode ? products.map(prod => prod.split(' ')[0]) : products
+						}
+						placeholder='Enter a product'
+						onChange={setProduct}
+						value={product}
+					/>
+					<Checkbox checked={idMode} onChange={setIdMode} />
+				</div>
 				<Dropdown
 					options={defectTypes}
 					placeholder='Enter a defect type'

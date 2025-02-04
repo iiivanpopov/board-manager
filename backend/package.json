@@ -11,20 +11,20 @@
 	"type": "module",
 	"module": "./src/app.ts",
 	"dependencies": {
-		"@prisma/client": "^6.2.1",
-		"bun": "^1.1.45",
+		"@prisma/client": "^6.3.1",
+		"bun": "^1.2.2",
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.7",
 		"express": "^4.21.2",
 		"jsonwebtoken": "^9.0.2",
-		"prisma": "^6.2.1"
+		"prisma": "^6.3.1"
 	},
 	"devDependencies": {
-		"@types/bun": "^1.1.18",
+		"@types/bun": "^1.2.2",
 		"@types/cors": "^2.8.17",
 		"@types/express": "^5.0.0",
-		"@types/jsonwebtoken": "^9.0.7",
-		"@types/node": "^22.10.7",
+		"@types/jsonwebtoken": "^9.0.8",
+		"@types/node": "^22.13.1",
 		"debug": "^4.4.0",
 		"typescript": "^5.7.3"
 	}
