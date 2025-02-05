@@ -15,7 +15,7 @@ export const InventoryForm: React.FC<{ className?: string }> = observer(
 
 		const [date, setDate] = useState<string>(formatDate(new Date()))
 		const [product, setProduct] = useState<string>('')
-		const [quantity, setQuantity] = useState<string>('')
+		const [quantity, setQuantity] = useState<string>('1')
 
 		const [idMode, setIdMode] = useState<boolean>(false)
 
@@ -35,6 +35,7 @@ export const InventoryForm: React.FC<{ className?: string }> = observer(
 					product,
 					worker: +store.worker,
 				})
+				setQuantity('1')
 			} catch (error) {
 				console.error('Error saving inventory:', error)
 			}

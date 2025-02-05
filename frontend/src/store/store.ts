@@ -179,6 +179,8 @@ export default class Store {
 			createdAt: response.data.inventory.createdAt,
 			type: 'inventory',
 		})
+
+		toast.info(`Saved #${response.data.inventory.id} record.`)
 	}
 
 	async deleteInventory(id: number) {

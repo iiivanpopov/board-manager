@@ -17,7 +17,7 @@ export const InspectionForm: React.FC<{ className?: string }> = observer(
 		const [product, setProduct] = useState<string>('')
 		const [defectType, setDefectType] = useState<string>('')
 		const [defect, setDefect] = useState<string>('')
-		const [quantity, setQuantity] = useState<string>('')
+		const [quantity, setQuantity] = useState<string>('1')
 		const [idMode, setIdMode] = useState<boolean>(false)
 
 		const weekNumber = new Date(date).getWeek()
@@ -42,6 +42,7 @@ export const InspectionForm: React.FC<{ className?: string }> = observer(
 					},
 					+quantity
 				)
+				setQuantity('1')
 			} catch (error) {
 				console.error('Error saving inspection:', error)
 			}
@@ -59,11 +60,7 @@ export const InspectionForm: React.FC<{ className?: string }> = observer(
 					onChange={setDate}
 					selected={date}
 				/>
-				<Input
-					value={quantity}
-					onChange={setQuantity}
-					placeholder='Enter a quantity'
-				/>
+
 				<div className='flex gap-x-8'>
 					<Dropdown
 						options={
@@ -87,7 +84,11 @@ export const InspectionForm: React.FC<{ className?: string }> = observer(
 					onChange={setDefect}
 					value={defect}
 				/>
-
+				<Input
+					value={quantity}
+					onChange={setQuantity}
+					placeholder='Enter a quantity'
+				/>
 				<Button disabled={!isFormValid} color='green' onClick={handleSave}>
 					Save
 				</Button>
