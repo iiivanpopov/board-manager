@@ -1,5 +1,7 @@
 @echo off
 
+git switch main
+
 echo Executing git pull...
 git pull
 if %errorlevel% neq 0 (
