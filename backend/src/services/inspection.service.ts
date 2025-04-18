@@ -17,7 +17,7 @@ class InspectionService {
 			inspections.push(inspection)
 		}
 
-		if (data.defectType.toLowerCase() == 'other') {
+		if (data.defect.split(' ')[0].toLowerCase() == 'other:') {
 			await this.dataService.saveNewDefect(data.defect)
 		}
 

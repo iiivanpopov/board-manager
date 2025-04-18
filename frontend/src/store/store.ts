@@ -4,12 +4,7 @@ import { toast } from 'react-toastify'
 import { API_URL } from '../api'
 import { AuthResponse } from '../models/AuthResponse'
 import { Options } from '../models/Options'
-import {
-	Inspection,
-	Inventory,
-	Record,
-	RecordsArray,
-} from '../models/RecordResponse'
+import { Inspection, Inventory, Record, RecordsArray } from '../models/RecordResponse'
 import { IUser } from '../models/User'
 import AuthService from '../services/AuthService'
 import OptionsService from '../services/OptionsService'
@@ -88,9 +83,7 @@ export default class Store {
 			this.setWorker(worker)
 			await this.fetchOptions()
 		} catch (error) {
-			throw new Error(
-				`Login failed: ${error.response?.data?.message || error.message}`
-			)
+			throw new Error(`Login failed: ${error.response?.data?.message || error.message}`)
 		}
 	}
 
@@ -98,9 +91,7 @@ export default class Store {
 		try {
 			await AuthService.registration(password, fullName, secret)
 		} catch (error) {
-			throw new Error(
-				`Registration failed: ${error.response?.data?.message || error.message}`
-			)
+			throw new Error(`Registration failed: ${error.response?.data?.message || error.message}`)
 		}
 	}
 
@@ -115,10 +106,7 @@ export default class Store {
 			this.updateLocalStorage('worker', null)
 			this.clearUserState()
 		} catch (error) {
-			console.error(
-				'Logout failed:',
-				error.response?.data?.message || error.message
-			)
+			console.error('Logout failed:', error.response?.data?.message || error.message)
 		}
 	}
 
@@ -136,19 +124,12 @@ export default class Store {
 			this.setAuth(true)
 			this.setUser(response.data.user)
 		} catch (error) {
-			console.error(
-				'Auth check failed:',
-				error.response?.data?.message || error.message
-			)
+			console.error('Auth check failed:', error.response?.data?.message || error.message)
 		}
 	}
 
-	async saveInspection(
-		inspection: Omit<Inspection, 'createdAt' | 'id'>,
-		quantity: number
-	) {
+	async saveInspection(inspection: Omit<Inspection, 'createdAt' | 'id'>, quantity: number) {
 		const response = await RecordService.saveInspection(inspection, quantity)
-		console.log(response.data)
 		for (const insp of response.data.inspections) {
 			this.addLastRecord({
 				...inspection,
@@ -164,9 +145,7 @@ export default class Store {
 	async deleteInspection(id: number) {
 		await RecordService.deleteInspection(id)
 		this.setLastRecords(
-			this.lastRecords.filter(
-				item => !(item.id === id && item.type === 'inspection')
-			)
+			this.lastRecords.filter(item => !(item.id === id && item.type === 'inspection'))
 		)
 	}
 
@@ -186,9 +165,7 @@ export default class Store {
 	async deleteInventory(id: number) {
 		await RecordService.deleteInventory(id)
 		this.setLastRecords(
-			this.lastRecords.filter(
-				item => !(item.id === id && item.type === 'inventory')
-			)
+			this.lastRecords.filter(item => !(item.id === id && item.type === 'inventory'))
 		)
 	}
 
@@ -199,10 +176,7 @@ export default class Store {
 			this.setIsLoading(false)
 		} catch (error) {
 			this.setIsLoading(true)
-			console.error(
-				'Fetch options failed:',
-				error.response?.data?.message || error.message
-			)
+			console.error('Fetch options failed:', error.response?.data?.message || error.message)
 		}
 	}
 }

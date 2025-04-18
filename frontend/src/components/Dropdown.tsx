@@ -37,12 +37,11 @@ export const Dropdown: React.FC<DropdownProps> = observer(
 						</option>
 					)}
 
-					{options.map(option => {
-						const key = typeof option === 'string' ? option : option.value
+					{options.map((option, id) => {
 						const value = typeof option === 'string' ? option : option.value
 						const label = typeof option === 'string' ? option : option.label
 						return (
-							<option key={key} value={value}>
+							<option key={id} value={value}>
 								{label}
 							</option>
 						)

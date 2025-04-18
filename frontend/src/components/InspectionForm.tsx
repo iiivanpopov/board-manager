@@ -16,14 +16,15 @@ export const InspectionForm: React.FC<{ className?: string }> = observer(({ clas
 	const [product, setProduct] = useState<string>('')
 	const [defectType, setDefectType] = useState<string>('')
 	const [defect, setDefect] = useState<string>('')
+	const [defectNotes, setDefectNotes] = useState<string>('')
 	const [quantity, setQuantity] = useState<string>('1')
 	const [idMode, setIdMode] = useState<boolean>(false)
 
 	const weekNumber = new Date(date).getWeek()
 
 	const products = store.options.products
-	const defects = store.options.defects
-	const defectTypes = [...store.options.defectTypes, 'Other']
+	const defects = [...store.options.defects, 'Other']
+	const defectTypes = store.options.defectTypes
 
 	const isFormValid = product && defectType && defect && date
 
@@ -45,7 +46,7 @@ export const InspectionForm: React.FC<{ className?: string }> = observer(({ clas
 					inspector: store.user.fullName,
 					product,
 					defectType,
-					defect,
+					defect: defect.toLowerCase() == 'other' ? `Other: ${defectNotes}` : defect,
 					worker: +store.worker,
 				},
 				+quantity
@@ -80,15 +81,14 @@ export const InspectionForm: React.FC<{ className?: string }> = observer(({ clas
 				onChange={setDefectType}
 				value={defectType}
 			/>
-			{defectType.toLocaleLowerCase() == 'other' ? (
-				<Input value={defect} onChange={setDefect} placeholder='Enter a defect' />
-			) : (
-				<Dropdown
-					options={defects}
-					placeholder='Enter a defect'
-					onChange={setDefect}
-					value={defect}
-				/>
+			<Dropdown
+				options={defects}
+				placeholder='Enter a defect'
+				onChange={setDefect}
+				value={defect}
+			/>
+			{defect.toLocaleLowerCase() == 'other' && (
+				<Input value={defectNotes} onChange={setDefectNotes} placeholder='Enter a defect notes' />
 			)}
 			<Input value={quantity} onChange={setQuantity} placeholder='Enter a quantity' />
 			<Button disabled={!isFormValid} color='green' onClick={handleSave}>

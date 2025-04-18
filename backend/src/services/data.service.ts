@@ -24,7 +24,8 @@ class DataService {
 	}
 
 	async saveNewDefect(defect: string) {
-		await writeFile(DEFECTS, defect)
+		const defects = await readFileLines(DEFECTS)
+		if (!defects.includes(defect)) await writeFile(DEFECTS, defect)
 	}
 }
 
