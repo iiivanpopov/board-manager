@@ -14,9 +14,7 @@ export default class RecordService {
 		return response
 	}
 
-	static async deleteInspection(
-		id: number
-	): Promise<AxiosResponse<Inspection>> {
+	static async deleteInspection(id: number): Promise<AxiosResponse<Inspection>> {
 		const response = await $api.delete<Inspection>(`/inspection/${id}`)
 		return response
 	}
@@ -24,10 +22,9 @@ export default class RecordService {
 	static async saveInventory(
 		payload: Omit<Inventory, 'createdAt' | 'id'>
 	): Promise<AxiosResponse<{ inventory: Inventory }>> {
-		const response = await $api.post<{ inventory: Inventory }>(
-			`/inventory/${payload.worker}`,
-			{ ...payload }
-		)
+		const response = await $api.post<{ inventory: Inventory }>(`/inventory/${payload.worker}`, {
+			...payload,
+		})
 		return response
 	}
 

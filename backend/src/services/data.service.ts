@@ -1,4 +1,4 @@
-import { readFileLines } from '@/utils/files'
+import { readFileLines, writeFile } from '@/utils/files'
 
 const DEFECT_TYPES = 'defect_types.txt'
 const DEFECTS = 'defects.txt'
@@ -21,6 +21,10 @@ class DataService {
 			defects: data[1],
 			products: data[2],
 		}
+	}
+
+	async saveNewDefect(defect: string) {
+		await writeFile(DEFECTS, defect)
 	}
 }
 

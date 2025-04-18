@@ -12,7 +12,7 @@ class UserController {
 				return next(ApiError.Unauthorized())
 			}
 			const userData = await this.userService.register(fullName, password)
-			return res.status(200).json(userData)
+			res.status(200).json(userData)
 		} catch (error) {
 			next(error)
 		}
@@ -22,7 +22,7 @@ class UserController {
 		try {
 			const { password } = req.body
 			const userData = await this.userService.login(password)
-			return res.status(200).json(userData)
+			res.status(200).json(userData)
 		} catch (error) {
 			next(error)
 		}
@@ -42,7 +42,7 @@ class UserController {
 		try {
 			const refreshToken = req.headers.authorization?.split(' ')[1] ?? ''
 			const userData = await this.userService.refresh(refreshToken)
-			return res.status(200).json(userData)
+			res.status(200).json(userData)
 		} catch (error) {
 			next(error)
 		}

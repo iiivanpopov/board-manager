@@ -8,19 +8,14 @@ class InspectionController {
 		this.inspectionService = inspectionService
 	}
 
-	saveInspectionRecord = async (
-		req: Request,
-		res: Response,
-		next: NextFunction
-	): Promise<void> => {
+	saveInspectionRecord = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		const data = new InspectionDTO({ ...req.body, ...req.params })
 
 		try {
-			const { inspections, quantity } =
-				await this.inspectionService.saveInspectionRecord(
-					data,
-					req.body.quantity
-				)
+			const { inspections, quantity } = await this.inspectionService.saveInspectionRecord(
+				data,
+				req.body.quantity
+			)
 			res.status(201).json({ inspections, quantity })
 		} catch (error) {
 			next(error)
@@ -35,9 +30,7 @@ class InspectionController {
 		const { id } = req.params
 
 		try {
-			const inspection = await this.inspectionService.deleteInspectionRecord(
-				+id
-			)
+			const inspection = await this.inspectionService.deleteInspectionRecord(+id)
 			res.status(200).json({ inspection })
 		} catch (error) {
 			next(error)

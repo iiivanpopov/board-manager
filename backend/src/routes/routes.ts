@@ -12,10 +12,10 @@ import InventoryService from '@services/inventory.service'
 import prisma from '@utils/prisma'
 import { Router } from 'express'
 
-const inspectionService = new InspectionService(prisma)
 const inventoryService = new InventoryService(prisma)
 const dataService = new DataService()
 const userRepository = new UserRepository(prisma)
+const inspectionService = new InspectionService(prisma, dataService)
 const tokenService = new TokenService(prisma)
 const userService = new UserService(userRepository, tokenService, prisma)
 
@@ -31,18 +31,10 @@ router.post('/login', userController.login)
 router.get('/logout', userController.logout)
 router.get('/refresh', userController.refresh)
 
-router.post(
-	'/inspection/:worker',
-	authMiddleware,
-	inspectionController.saveInspectionRecord
-)
+router.post('/inspection/:worker', authMiddleware, inspectionController.saveInspectionRecord)
 router.delete('/inspection/:id', inspectionController.deleteInspectionRecord)
 
-router.post(
-	'/inventory/:worker',
-	authMiddleware,
-	inventoryController.saveInventoryRecord
-)
+router.post('/inventory/:worker', authMiddleware, inventoryController.saveInventoryRecord)
 router.delete('/inventory/:id', inventoryController.deleteInventoryRecord)
 
 router.get('/data', dataController.fetchData)

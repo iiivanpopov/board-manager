@@ -1,8 +1,13 @@
 import path from 'path'
 
+export const getPath = (filePath: string) => path.join(__dirname, '../../data', filePath)
+export const getFile = (filePath: string) => Bun.file(getPath(filePath))
+export const writeFile = async (filePath: string, data: string) =>
+	await Bun.write(getPath(filePath), `${await getFile(filePath).text()}\n${data}`)
+
 export const readFileContent = async (filePath: string): Promise<string> => {
 	try {
-		const file = Bun.file(path.join(__dirname, '../../data', filePath))
+		const file = getFile(filePath)
 		const text = await file.text()
 		return text
 	} catch (error) {

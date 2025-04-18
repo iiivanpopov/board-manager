@@ -1,11 +1,9 @@
 import ApiError from '@/exceptions/api-error'
 import type { BoardInspection, PrismaClient } from '@prisma/client'
+import DataService from './data.service'
 
 class InspectionService {
-	prisma: PrismaClient
-	constructor(prisma: PrismaClient) {
-		this.prisma = prisma
-	}
+	constructor(private prisma: PrismaClient, private dataService: DataService) {}
 	async saveInspectionRecord(
 		data: Omit<BoardInspection, 'id' | 'createdAt'>,
 		quantity: number
@@ -17,6 +15,10 @@ class InspectionService {
 				data,
 			})
 			inspections.push(inspection)
+		}
+
+		if (data.defectType.toLowerCase() == 'other') {
+			await this.dataService.saveNewDefect(data.defect)
 		}
 
 		return { quantity, inspections }
