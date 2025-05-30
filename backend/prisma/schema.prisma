@@ -24,6 +24,7 @@ model BoardInspection {
   product    String   @default("Undefined")
   defectType String   @default("Undefined")
   defect     String   @default("Undefined")
+  note       String?
   worker     Int
   createdAt  DateTime @default(now()) @db.Timestamptz(2)
 }

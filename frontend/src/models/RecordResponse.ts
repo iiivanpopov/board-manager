@@ -7,6 +7,7 @@ export interface Inspection {
 	defectType: string
 	defect: string
 	worker: number
+	note: string
 	createdAt: Date
 }
 

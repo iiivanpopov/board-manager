@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { formatDate } from '../helpers/date'
 import { Context } from '../main'
@@ -16,26 +16,17 @@ export const InspectionForm: React.FC<{ className?: string }> = observer(({ clas
 	const [product, setProduct] = useState<string>('')
 	const [defectType, setDefectType] = useState<string>('')
 	const [defect, setDefect] = useState<string>('')
-	const [defectNotes, setDefectNotes] = useState<string>('')
+	const [note, setNote] = useState<string>('')
 	const [quantity, setQuantity] = useState<string>('1')
 	const [idMode, setIdMode] = useState<boolean>(false)
 
 	const weekNumber = new Date(date).getWeek()
 
 	const products = store.options.products
-	const defects = [...store.options.defects, 'Other']
+	const defects = [...store.options.defects]
 	const defectTypes = store.options.defectTypes
 
 	const isFormValid = product && defectType && defect && date
-
-	const prevDefectTypeRef = useRef(defectType)
-
-	useEffect(() => {
-		if (prevDefectTypeRef.current.toLowerCase() == 'other' && defectType.toLowerCase() != 'other') {
-			setDefect('')
-		}
-		prevDefectTypeRef.current = defectType
-	}, [defectType])
 
 	const handleSave = async () => {
 		try {
@@ -46,7 +37,8 @@ export const InspectionForm: React.FC<{ className?: string }> = observer(({ clas
 					inspector: store.user.fullName,
 					product,
 					defectType,
-					defect: defect.toLowerCase() == 'other' ? `Other: ${defectNotes}` : defect,
+					defect,
+					note,
 					worker: +store.worker,
 				},
 				+quantity
@@ -87,8 +79,8 @@ export const InspectionForm: React.FC<{ className?: string }> = observer(({ clas
 				onChange={setDefect}
 				value={defect}
 			/>
-			{defect.toLocaleLowerCase() == 'other' && (
-				<Input value={defectNotes} onChange={setDefectNotes} placeholder='Enter a defect notes' />
+			{defect.startsWith("OTH") && (
+				<Input value={note} onChange={setNote} placeholder='Enter a note' />
 			)}
 			<Input value={quantity} onChange={setQuantity} placeholder='Enter a quantity' />
 			<Button disabled={!isFormValid} color='green' onClick={handleSave}>
